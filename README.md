@@ -88,7 +88,7 @@ In [Webpack](https://webpack.js.org/guides/asset-management/) this is done using
 
 This has the downside that you can't have custom control over when to load individual files or how to use them differently in different modules. However, since there is no other standard way to refer to files relative to a module, it's what we're stuck with.
 
-With assert references, the web platform could add them to the [`URL.createObjectURL()`](https://w3c.github.io/FileAPI/#dfn-createObjectURL) for example. That way they can be used as file with any web API.
+With asset references, the web platform could add them to the [`URL.createObjectURL()`](https://w3c.github.io/FileAPI/#dfn-createObjectURL) for example. That way they can be used as file with any web API.
 
 ```js
 asset Logo from "./logo.gif";
