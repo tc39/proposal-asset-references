@@ -76,7 +76,7 @@ This lets the external resource manager be responsible for the complex interacti
 - Handle I/O errors and fallback gracefully.
 - Retry the fetch if fails the first time.
 - Display a UI that asks the user to connect to WiFi, and retry again after a button is clicked.
-- Pick one of multiple possible resources depending on what's available. 
+- Pick one of multiple possible resources depending on what's available.
 
 This is all possible by using dynamic `import` but since those are scoped to a local file, a lot of that logic gets hoisted out into the calling function. First class references lets us create abstractions for that loading behavior.
 
@@ -153,7 +153,7 @@ If an asset refers to a module, then type systems, e.g. Flow and TypeScript, can
 ```js
 // The type system knows that this file will export a signature. E.g. {bar: number}
 // It can type this. E.g. AssetReference<Module<{bar: number}>>
-asset Foo from "foo.js"; 
+asset Foo from "foo.js";
 async function load() {
    // The type system now knows that this is wrong:
   let foo: {bar: string} = await import(Foo);
@@ -174,7 +174,7 @@ There is possible proposals to build scheduling priorities into the web platform
 
 ### Resource Hint
 
-We should possibly allow the identifier to be excluded. 
+We should possibly allow the identifier to be excluded.
 
 ```js
 asset "foo";
@@ -359,4 +359,23 @@ With today's tooling it is unfortunately better to simply fallback to the non-st
 
 ```js
 const MyOtherComponent = require.resolve("other-component");
+```
+
+### Deno Resource Caching
+
+Remote third-party modules are imported with URLs and cached in the filesystem at compile-time. However, these modules cannot include non-code assets in the dependency graph. Such assets must instead be downloaded at runtime. This harms startup performance and requires granting [net permission](https://deno.land/manual/getting_started/permissions) to the program, or necessitates an extra build step to do these things.
+
+This proposal allows remote modules to declare static dependencies on relatively located non-code assets, which means they can be fetched and cached at compile-time just like JS/TS modules.
+
+```ts
+// This is a remote module at https://deno.land/x/foo@0.1.0/mod.ts.
+// It depends on a plugin at https://deno.land/x/foo@0.1.0/plugins/foo.so.
+
+asset fooPlugin from "./plugins/foo.so";
+
+Deno.openPlugin(fooPlugin);
+
+export function foo(): void {
+  Deno.core.dispatch(Deno.core.ops()["op_foo"], argUi8);
+}
 ```
