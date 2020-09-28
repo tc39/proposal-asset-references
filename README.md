@@ -1,6 +1,6 @@
 # Asset References
 
-This repository contains a proposal to add syntax to get first class references to a module identity without actually loading or initializing that module. This can also be expanded to include other asset types. It's a way to access an asset relative to the current module. It's not yet proposed at TC39.
+This repository contains a proposal to add syntax to get first class references to a module identity without actually loading or initializing that module. This can also be expanded to include other asset types. It's a way to access an asset relative to the current module. It reached [Stage 1 in November 2018](https://github.com/tc39/notes/blob/master/meetings/2018-11/nov-28.md).
 
 This proposal builds on top of the [dynamic import proposal](https://tc39.github.io/proposal-dynamic-import/).
 
